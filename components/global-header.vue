@@ -1,0 +1,70 @@
+<template>
+  <div class="global-header">
+    <div class="logo">
+      <img :src="require('~/assets/img/mobile/logo.png')" alt="ロゴ" class="logo-img" />
+    </div>
+    <div class="search">
+      <img :src="require('~/assets/img/mobile/glass.png')" alt="検索" class="glass" />
+      <span class="text"><span>作品</span><span>検索</span></span>
+    </div>
+    <div class="menu">
+      <img :src="require('~/assets/img/mobile/three-lines.png')" alt="メニュー" class="three-lines" />
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  name: "GlobalHeader"
+});
+</script>
+
+<style lang="scss" scoped>
+@import "~assets/css/color";
+.global-header {
+  height: 4.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: serif;
+  color: $primary;
+  .logo {
+    width: 41.667%;
+    margin: 1rem 1rem 0.5rem;
+    text-align: center;
+    .logo-img {
+      height: 2.7rem;
+    }
+  }
+  .search {
+    height: 100%;
+    width: 33.333%;
+    border-right: 1px solid $border;
+    border-left: 1px solid $border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    .glass {
+      height: 1.2rem;
+      margin: 0.5rem;
+    }
+    .text {
+      letter-spacing: 0.1rem;
+      font-weight: bold;
+      & > span {
+        display: inline-block;
+      }
+    }
+  }
+  .menu {
+    width: 16.667%;
+    text-align: center;
+    .three-lines {
+      height: 1.5rem;
+      // margin: 1rem;
+    }
+  }
+}
+</style>

@@ -1,9 +1,49 @@
 <template>
-  <section class="section">
+  <section class="main">
+    <GlobalHeader />
+    <div class="top-img">
+      <p class="text">
+        青空のように
+        自由な、
+        インターネット
+        電子図書館。
+      </p>
+    </div>
   </section>
 </template>
 
-<script>
-export default {
-}
+<script lang="ts">
+import Vue from "vue";
+import GlobalHeader from "~/components/global-header.vue"
+
+export default Vue.extend({
+  components: {
+    GlobalHeader
+  }
+});
 </script>
+
+<style lang="scss" scoped>
+.top-img {
+  overflow: hidden;
+  height: 80vh;
+  width: auto;
+  max-width: none;
+  position: relative;
+  background-image: url("~assets/img/top.jpg");
+  background-repeat: no-repeat;
+  background-position: 75% 0;
+  background-size: cover;
+  .text {
+    writing-mode: vertical-rl;
+    white-space: pre-line;
+    padding-top: 14vh;
+    padding-left: 15vw;
+    color: white;
+    font-weight: bold;
+    font-family: serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.2rem;
+  }
+}
+</style>
