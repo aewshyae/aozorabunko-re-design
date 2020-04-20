@@ -1,6 +1,5 @@
 <template>
   <section class="main">
-    <GlobalHeader />
     <div class="top-img">
       <p class="text">
         青空のように
@@ -14,12 +13,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import GlobalHeader from "~/components/global-header.vue"
 
 export default Vue.extend({
-  components: {
-    GlobalHeader
-  }
+  name: "Top",
 });
 </script>
 
