@@ -29,6 +29,8 @@ export default Vue.extend({
   justify-content: center;
   font-family: serif;
   color: $primary;
+  border-bottom: 1px solid $border;
+  background-color: white;
   .logo {
     width: 41.667%;
     margin: 1rem 1rem 0.5rem;
