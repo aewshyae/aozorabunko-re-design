@@ -13,10 +13,11 @@
     "test": "jest"
   },
   "dependencies": {
-    "nuxt": "^2.0.0",
     "@nuxt/typescript-runtime": "^0.4.0",
-    "nuxt-buefy": "^0.3.2",
-    "@nuxtjs/pwa": "^3.0.0-0"
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "dayjs": "^1.8.25",
+    "nuxt": "^2.0.0",
+    "nuxt-buefy": "^0.3.2"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",
