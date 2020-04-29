@@ -1,6 +1,13 @@
 body {
-  font-family: sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic, Verdana, Meiryo, "M+ 1p", sans-serif;
   background-color: $base-background;
   min-height: 100vh;
-  color: $base-text
+  color: $base-text;
+}
+.desc {
+  a {
+    margin: 1rem 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
 }

@@ -1,0 +1,117 @@
+<template>
+  <section class="author">
+    <header class="header">
+    <div class="title">
+      <h1 class="page-title">{{author.name}}</h1>
+      <p class="title-caption">
+        <span class="kana">{{author.name_kana}}</span>
+        <span class="en">{{author.name_en}}</span>
+      </p>
+    </div>
+    <div class="date">
+      (
+      <span class="birth">{{author.born_on | parseDate}}</span>
+      〜
+      <span class="passaway">{{author.died_on | parseDate}}</span>
+      )
+    </div>
+
+    <div class="description">
+      <h3 class="head">作家について</h3>
+      <p class="desc" v-html="author.desc"></p>
+    </div>
+    </header>
+
+    <div class="works">
+      <div class="published">
+        <h2 class="section-title">公開中の作品</h2>
+        <nuxt-link class="work" v-for="w in author.work" :key="w.work_id" :to="`/book/${w.work_id}`">{{w.title}}</nuxt-link>
+      </div>
+      <div class="workings">
+        <h2 class="section-title">作業中の作品</h2>
+        <span class="working" v-for="w in author.wip" :key="w.work_id">{{w.title}}</span>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script lang="ts">
+import dayjs from 'dayjs'
+import 'dayjs/locale/ja'
+dayjs.locale('ja') 
+const localizedFormat = require('dayjs/plugin/localizedFormat')
+dayjs.extend(localizedFormat)
+
+import Vue from "vue";
+import GlobalHeader from "~/components/global-header.vue";
+
+export default Vue.extend({
+  name: "Author",
+  components: {
+    GlobalHeader
+  },
+  asyncData({ params, store, payload }) {
+    if (payload) {
+      return {
+        author: payload.author
+      };
+    }
+    const id = params.id;
+    if (!id) {
+      return;
+    }
+    return {
+      author: store.state.personDetail[id]
+    };
+  },
+  filters: {
+    parseDate(d: string) {
+      try {
+        return dayjs(d).format("LL")
+      } catch (e) {
+        return d
+      }
+    }
+  }
+});
+</script>
+
+<style lang="scss" scoped>
+h1.page-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.title-caption {
+  font-size: 0.7rem;
+  font-weight: normal;
+  margin: 0.5rem 0;
+  .kana {
+    margin-right: 1rem;
+  }
+}
+
+.date {
+  font-size: 0.7rem;
+  margin: 1.5rem 0;
+}
+
+.description {
+  h3.head {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 0.2rem;
+  }
+}
+
+h2.section-title {
+  font-size: 1.8rem;
+  font-family: serif;
+  letter-spacing: 0.2rem;
+  border-bottom: 1px solid $border;
+  color: $primary;
+  font-weight: bold;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+</style>
