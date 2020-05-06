@@ -1,3 +1,4 @@
+import { personDetailArray } from './util/personDetail'
 
 export default {
   mode: 'universal',
@@ -58,6 +59,14 @@ export default {
     ** You can extend webpack config here
     */
     extend (_config, _ctx) {
+    }
+  },
+  generate: {
+    routes() {
+      return personDetailArray.map(p => {
+        console.log(p.id)
+        return `/author/${p.id}`
+      })
     }
   }
 }

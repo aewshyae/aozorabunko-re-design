@@ -1,4 +1,4 @@
-export const personDetailArray: any[] = require("~/tmp/aozora_json_scrape/person_detail.json")
+export const personDetailArray: any[] = require("../tmp/aozora_json_scrape/person_detail.json")
 export const personDetail: any = {}
 personDetailArray.forEach(e => {
   personDetail[e.id] = e
