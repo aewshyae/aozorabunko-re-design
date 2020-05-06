@@ -34,7 +34,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxt/typescript-build',
+    '@nuxt/typescript-build'
   ],
   /*
   ** Nuxt.js modules
@@ -43,11 +43,11 @@ export default {
     // Doc: https://buefy.github.io/#/documentation
     'nuxt-buefy',
     '@nuxtjs/pwa',
-    '@nuxtjs/style-resources',
+    '@nuxtjs/style-resources'
   ],
   styleResources: {
     scss: [
-     '@/assets/css/color.scss',
+      '@/assets/css/color.scss'
     ]
   },
   /*
@@ -57,7 +57,7 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend (_config, _ctx) {
     }
   }
 }

@@ -12,7 +12,3 @@ function groupByInitials(a: any[], k: string) {
     return obj
   }, {})
 }
-
-export const state = () => ({
-  personDetail,
-})

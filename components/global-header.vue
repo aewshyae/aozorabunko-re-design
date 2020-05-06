@@ -1,23 +1,23 @@
 <template>
   <div class="global-header">
     <div class="logo">
-      <img :src="require('~/assets/img/mobile/logo.png')" alt="ロゴ" class="logo-img" />
+      <img :src="require('~/assets/img/mobile/logo.png')" alt="ロゴ" class="logo-img">
     </div>
     <div class="search">
-      <img :src="require('~/assets/img/mobile/glass.png')" alt="検索" class="glass" />
+      <img :src="require('~/assets/img/mobile/glass.png')" alt="検索" class="glass">
       <span class="text"><span>作品</span><span>検索</span></span>
     </div>
     <div class="menu">
-      <img :src="require('~/assets/img/mobile/three-lines.png')" alt="メニュー" class="three-lines" />
+      <img :src="require('~/assets/img/mobile/three-lines.png')" alt="メニュー" class="three-lines">
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue'
 export default Vue.extend({
-  name: "GlobalHeader"
-});
+  name: 'GlobalHeader'
+})
 </script>
 
 <style lang="scss" scoped>

@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Vue from "vue";
-import GlobalHeader from "~/components/global-header.vue"
+import Vue from 'vue'
+import GlobalHeader from '~/components/global-header.vue'
 export default Vue.extend({
   components: {
     GlobalHeader
