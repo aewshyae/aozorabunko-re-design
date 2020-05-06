@@ -64,9 +64,17 @@ export default {
   generate: {
     routes() {
       return personDetailArray.map(p => {
-        console.log(p.id)
-        return `/author/${p.id}`
+        return {
+          route: `/author/${p.id}`,
+          payload: p
+        }
       })
+    },
+    done ({ duration, errors, _workerInfo }) {
+      if (errors.length) {
+        // TODO record errors or sth
+      }
+      console.log(`done! duration: ${duration}, errors: ${errors.length}`)
     }
   }
 }
