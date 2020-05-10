@@ -67,8 +67,6 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 
-import { personDetail } from '~/util/personDetail'
-
 dayjs.locale('ja')
 const localizedFormat = require('dayjs/plugin/localizedFormat')
 dayjs.extend(localizedFormat)
@@ -86,7 +84,7 @@ export default Vue.extend({
       }
     }
   },
-  asyncData ({ params, payload }) {
+  asyncData ({ params, payload, store }) {
     if (payload) {
       return {
         author: payload
@@ -98,7 +96,7 @@ export default Vue.extend({
     }
     // TODO 作品を頭文字であ行〜わ行に分類したいが、作品にかながついていないのでできない
     return {
-      author: personDetail[id]
+      author: store.state.personDetail[id]
     }
   }
 })
