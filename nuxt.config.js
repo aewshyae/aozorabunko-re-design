@@ -1,4 +1,5 @@
-import { personDetailArray } from './util/personDetail'
+import axios from 'axios'
+require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -53,6 +54,9 @@ export default {
       '@/assets/css/color.scss'
     ]
   },
+  env: {
+    PERSON_DETAIL_URL: process.env.NUXT_ENV_PERSON_DETAIL_URL
+  },
   /*
   ** Build configuration
   */
@@ -60,22 +64,28 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, _ctx) {
+    extend(config, _ctx) {
       config.node = {
         fs: 'empty'
-    }
+      }
     }
   },
   generate: {
-    routes() {
-      return personDetailArray.map(p => {
-        return {
-          route: `/author/${p.id}`,
-          payload: p
-        }
-      })
+    async routes() {
+      try {
+        return await axios.get(process.env.NUXT_ENV_PERSON_DETAIL_URL).then(res => {
+          return res.data.map(p => {
+            return {
+              route: `/author/${p.id}`,
+              payload: p
+            }
+          })
+        })
+      } catch (e) {
+        console.error(e)
+      }
     },
-    done ({ duration, errors, _workerInfo }) {
+    done({ duration, errors, _workerInfo }) {
       if (errors.length) {
         // TODO record errors or sth
       }
