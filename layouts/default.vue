@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="default">
     <GlobalHeader />
-    <nuxt class="nuxt" />
+    <nuxt class="root" />
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.nuxt {
+.root {
   padding: 2rem 1.2rem;
 }
 </style>
