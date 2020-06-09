@@ -39,7 +39,7 @@
               class="title published-link"
               :to="`/book/${w.work_id}`"
             >
-              {{ w.title }}
+              {{ w.titleToDisplay }}
             </nuxt-link>
           </li>
         </ul>
@@ -54,7 +54,7 @@
               v-for="w in author.wip"
               :key="w.work_id"
               class="title working-text"
-            >{{ w.title }}</span>
+            >{{ w.titleToDisplay }}</span>
           </li>
         </ul>
       </div>
@@ -67,11 +67,11 @@ import Vue from 'vue'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 
-import { personDetail } from '~/util/personDetail'
-
 dayjs.locale('ja')
 const localizedFormat = require('dayjs/plugin/localizedFormat')
 dayjs.extend(localizedFormat)
+
+type Work = any
 
 export default Vue.extend({
   name: 'Author',
@@ -86,7 +86,7 @@ export default Vue.extend({
       }
     }
   },
-  asyncData ({ params, payload }) {
+  asyncData ({ params, payload, store }) {
     if (payload) {
       return {
         author: payload
@@ -96,9 +96,33 @@ export default Vue.extend({
     if (!id) {
       return
     }
+    const author = store.state.personDetail[id]
+    const generateTitle = (works: Work[]) => {
+      works.forEach(w => {
+        w.titleToDisplay =  `${w.title} ${w.subtitle || ""}`
+      })
+    }
+    generateTitle(author.work)
+    generateTitle(author.wip);
+
+    const allWorks = (author.work || []).concat(author.wip || [])
+    allWorks.forEach( (w1: Work) => {
+      const w1Changed = allWorks.map( (w2: Work) => {
+        if (w1.work_id === w2.work_id) { return false}
+        if (w1.titleToDisplay === w2.titleToDisplay) {
+          w2.titleToDisplay = `${w2.titleToDisplay}（${w2.kana_type}）`
+          return true
+        }
+      }).some( (e: boolean) => e)
+      if (w1Changed) {
+        w1.titleToDisplay = `${w1.titleToDisplay}（${w1.kana_type}）`
+      }
+    })
+    
+
     // TODO 作品を頭文字であ行〜わ行に分類したいが、作品にかながついていないのでできない
     return {
-      author: personDetail[id]
+      author
     }
   }
 })
