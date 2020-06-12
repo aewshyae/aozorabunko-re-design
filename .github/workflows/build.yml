@@ -17,13 +17,23 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-
+    env:
+      ACCESS_TOKEN:  ${{ secrets.ACCESS_TOKEN }}
+      URL: https://x-access-token:${ACCESS_TOKEN}@github.com/aewshyae/aozorabunko-re-design_pages
+      BRANCH: master
+      CLONE_DIR: tmp
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build
-    - run: npm run test
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test
+      # deploy
+      - run: git clone --depth 1 ${URL} ${CLONE_DIR} &> /dev/null
+      - run: cd ${CLONE_DIR}
+      - run: find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf 
+      - run: cp -r ../dist/. .
+      - run: git push ${URL} ${BRANCH}
