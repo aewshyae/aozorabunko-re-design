@@ -31,8 +31,13 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run test
+      - run: echo `pwd`
+      - run: echo $HOME
+      - run: echo `ls $HOME`
+      - run: ls
+      - run: ls ../
       # deploy
-      - run: git clone --depth 1 ${URL} ${CLONE_DIR} &> /dev/null
+      - run: git clone --depth 1 ${URL} ${CLONE_DIR}
       - run: cd ${CLONE_DIR}
       - run: find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf 
       - run: cp -r ../dist/. .
