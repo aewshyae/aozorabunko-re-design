@@ -71,10 +71,14 @@ export default {
     }
   },
   generate: {
+    interval: 1,
+    fallback: true,
     async routes() {
       try {
         return await axios.get(process.env.NUXT_ENV_PERSON_DETAIL_URL).then(res => {
-          return res.data.slice(0, 10).map(p => {
+          // NOTE tentative slicing workaround until `nuxt generate` execution time reduced
+          return res.data.slice(0, 2).map(p => {
+            console.log(p.id)
             return {
               route: `/author/${p.id}`,
               payload: p

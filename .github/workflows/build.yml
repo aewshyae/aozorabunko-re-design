@@ -33,11 +33,12 @@ jobs:
       - run: npm run build
       - run: npm run test
       - run: npm run generate
+      - run: ls -la
       # deploy
       - run: git clone --depth 1 ${URL} ${CLONE_DIR}
-      - run: cd ${CLONE_DIR}
-      - run: find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf 
-      - run: cp -r ../dist/. .
-      - run: git add .
-      - run: git commit --message "Update from $GITHUB_REPOSITORY github action"
-      - run: git push ${URL} ${BRANCH}
+      - run: ls -la
+      - run: find ${CLONE_DIR} | grep -v "${CLONE_DIR}"| grep -v "${CLONE_DIR}/.git" | grep -v "^\.*$" | xargs rm -rf 
+      - run: ls -la
+      - run: cp -r dist/ ${CLONE_DIR}/
+      - run: ls -la ${CLONE_DIR}
+      - run: cd ${CLONE_DIR} && git add . && git commit --message "Update from $GITHUB_REPOSITORY github action" && git push ${URL} ${BRANCH}
