@@ -74,7 +74,7 @@ export default {
     async routes() {
       try {
         return await axios.get(process.env.NUXT_ENV_PERSON_DETAIL_URL).then(res => {
-          return res.data.map(p => {
+          return res.data.slice(0, 10).map(p => {
             return {
               route: `/author/${p.id}`,
               payload: p
