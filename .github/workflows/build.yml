@@ -33,14 +33,11 @@ jobs:
       - run: npm run build
       - run: npm run test
       - run: npm run generate
-      - run: echo `pwd`
-      - run: echo $HOME
-      - run: echo `ls $HOME`
-      - run: ls
-      - run: ls ../
       # deploy
       - run: git clone --depth 1 ${URL} ${CLONE_DIR}
       - run: cd ${CLONE_DIR}
       - run: find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf 
       - run: cp -r ../dist/. .
+      - run: git add .
+      - run: git commit --message "Update from $GITHUB_REPOSITORY github action"
       - run: git push ${URL} ${BRANCH}
