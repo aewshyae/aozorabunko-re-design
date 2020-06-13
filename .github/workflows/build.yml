@@ -29,16 +29,22 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run build
-      - run: npm run test
-      - run: npm run generate
+      - name : build
+        run: |
+          npm ci
+          npm run build
+          npm run test
+          npm run generate
       - run: ls -la
-      # deploy
-      - run: git clone --depth 1 ${URL} ${CLONE_DIR}
-      - run: ls -la
-      - run: find ${CLONE_DIR} | grep -v "${CLONE_DIR}"| grep -v "${CLONE_DIR}/.git" | grep -v "^\.*$" | xargs rm -rf 
-      - run: ls -la
-      - run: cp -r dist/ ${CLONE_DIR}/
-      - run: ls -la ${CLONE_DIR}
-      - run: cd ${CLONE_DIR} && git add . && git commit --message "Update from $GITHUB_REPOSITORY github action" && git push ${URL} ${BRANCH}
+      - name: clone and replace with dist
+        run: |
+          git clone --depth 1 ${URL} ${CLONE_DIR}
+          ls -la
+          find ${CLONE_DIR} | grep -v "${CLONE_DIR}"| grep -v "${CLONE_DIR}/.git" | grep -v "^\.*$" | xargs rm -rf 
+          ls -la
+          cp -r dist/* ${CLONE_DIR}/
+          ls -la ${CLONE_DIR}
+      - name: deploy
+          git config --global user.email "aewshyae@users.noreply.github.com"
+          git config --global user.name "github-actions-bot"
+          cd ${CLONE_DIR} && git add . && git commit --message "Update from $GITHUB_REPOSITORY by github action" && git push ${URL} ${BRANCH}
