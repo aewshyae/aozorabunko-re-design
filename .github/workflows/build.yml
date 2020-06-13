@@ -22,6 +22,7 @@ jobs:
       URL: https://x-access-token:${ACCESS_TOKEN}@github.com/aewshyae/aozorabunko-re-design_pages
       BRANCH: master
       CLONE_DIR: tmp
+      NUXT_ENV_PERSON_DETAIL_URL: https://raw.githubusercontent.com/takahashim/aozora_json_scrape/master/person_detail.json
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
