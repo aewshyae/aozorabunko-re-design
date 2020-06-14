@@ -45,6 +45,7 @@ jobs:
           cp -r dist/* ${CLONE_DIR}/
           ls -la ${CLONE_DIR}
       - name: deploy
+        run: |
           git config --global user.email "aewshyae@users.noreply.github.com"
           git config --global user.name "github-actions-bot"
           cd ${CLONE_DIR} && git add . && git commit --message "Update from $GITHUB_REPOSITORY by github action" && git push ${URL} ${BRANCH}
