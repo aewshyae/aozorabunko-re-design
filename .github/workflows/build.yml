@@ -19,9 +19,9 @@ jobs:
         node-version: [12.x]
     env:
       ACCESS_TOKEN:  ${{ secrets.ACCESS_TOKEN }}
-      URL: https://x-access-token:${ACCESS_TOKEN}@github.com/aewshyae/aozorabunko-re-design_pages
+      URL: https://${ACCESS_TOKEN}@github.com/aewshyae/aozorabunko-re-design_pages.git
       BRANCH: master
-      CLONE_DIR: tmp
+      CLONE_DIR: $(mktemp -d)
       NUXT_ENV_PERSON_DETAIL_URL: https://raw.githubusercontent.com/takahashim/aozora_json_scrape/master/person_detail.json
     steps:
       - uses: actions/checkout@v2
@@ -35,17 +35,27 @@ jobs:
           npm run build
           npm run test
           npm run generate
-      - run: ls -la
+      - run: ls -1a dist
+      - name: github setup
+        run: |
+          git config --global user.email "1528058+aewshyae@users.noreply.github.com"
+          git config --global user.name "aewshyae"
+          echo "$CLONE_DIR"
       - name: clone and replace with dist
         run: |
           git clone --depth 1 ${URL} ${CLONE_DIR}
-          ls -la
-          find ${CLONE_DIR} | grep -v "${CLONE_DIR}"| grep -v "${CLONE_DIR}/.git" | grep -v "^\.*$" | xargs rm -rf 
-          ls -la
-          cp -r dist/* ${CLONE_DIR}/
-          ls -la ${CLONE_DIR}
+          echo "--cloned"
+          ls -1a
+          find "$CLONE_DIR" | grep -v "^$CLONE_DIR/\.git" | grep -v "^$CLONE_DIR$" | xargs rm -rf
+          echo "--deleted"
+          ls -1a "$CLONE_DIR"
+          cp -r dist/* "$CLONE_DIR"
+      - name: commit
+        run: |
+          cd ${CLONE_DIR}
+          git add .
+          git commit --message "Update from $GITHUB_REPOSITORY by github action"
+          echo "--commited"
       - name: deploy
         run: |
-          git config --global user.email "aewshyae@users.noreply.github.com"
-          git config --global user.name "github-actions-bot"
-          cd ${CLONE_DIR} && git add . && git commit --message "Update from $GITHUB_REPOSITORY by github action" && git push ${URL} ${BRANCH}
+          git push origin ${BRANCH}
