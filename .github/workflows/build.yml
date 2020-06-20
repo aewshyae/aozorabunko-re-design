@@ -18,10 +18,6 @@ jobs:
       matrix:
         node-version: [12.x]
     env:
-      API_TOKEN_GITHUB:  ${{ secrets.ACCESS_TOKEN }}
-      URL: https://${ACCESS_TOKEN}@github.com/aewshyae/aozorabunko-re-design_pages.git
-      BRANCH: master
-      CLONE_DIR: $(mktemp -d)
       NUXT_ENV_PERSON_DETAIL_URL: https://raw.githubusercontent.com/takahashim/aozora_json_scrape/master/person_detail.json
     steps:
       - uses: actions/checkout@v2
@@ -35,8 +31,9 @@ jobs:
           npm run build
           npm run test
           npm run generate
+          ls -l dist
       - name: Pushes to another repository
-        uses: cpina/github-action-push-to-another-repository@master
+        uses: aewshyae/github-action-push-to-another-repository@master
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
