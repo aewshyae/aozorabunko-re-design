@@ -17,13 +17,27 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-
+    env:
+      NUXT_ENV_PERSON_DETAIL_URL: https://raw.githubusercontent.com/takahashim/aozora_json_scrape/master/person_detail.json
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build
-    - run: npm run test
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name : build
+        run: |
+          npm ci
+          npm run build
+          npm run test
+          npm run generate
+          ls -l dist
+      - name: Pushes to another repository
+        uses: aewshyae/github-action-push-to-another-repository@master
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'dist'
+          destination-github-username: 'aewshyae'
+          destination-repository-name: 'aozorabunko-re-design_pages'
+          user-email: 1528058+aewshyae@users.noreply.github.com

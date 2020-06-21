@@ -87,16 +87,11 @@ export default Vue.extend({
     }
   },
   asyncData ({ params, payload, store }) {
-    if (payload) {
-      return {
-        author: payload
-      }
-    }
     const id = params.id
-    if (!id) {
+    if (!id && !payload) {
       return
     }
-    const author = store.state.personDetail[id]
+    const author = payload || store.state.personDetail[id]
     const generateTitle = (works: Work[]) => {
       works.forEach(w => {
         w.titleToDisplay =  `${w.title} ${w.subtitle || ""}`
