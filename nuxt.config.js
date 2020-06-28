@@ -55,7 +55,8 @@ export default {
     ]
   },
   env: {
-    PERSON_DETAIL_URL: process.env.NUXT_ENV_PERSON_DETAIL_URL
+    PERSON_DETAIL_URL: process.env.NUXT_ENV_PERSON_DETAIL_URL,
+    BOOK_CARD_URL: process.env.NUXT_ENV_BOOK_CARD_URL
   },
   /*
   ** Build configuration
