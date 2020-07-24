@@ -1,6 +1,8 @@
 export interface AuthorWork {
   work_id: number
   title: string
+  subtitle?: string
+  titleToDisplay?: string
   kana_type: string
   others: Array<{
     person_id: number

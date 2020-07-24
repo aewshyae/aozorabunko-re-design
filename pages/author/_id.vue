@@ -1,5 +1,5 @@
 <template>
-  <section class="author">
+  <section v-if="author" class="author">
     <header class="header">
       <div class="title">
         <h1 class="page-title">
@@ -89,33 +89,19 @@ export default Vue.extend({
   asyncData ({ params, payload, store }) {
     const id = params.id
     if (!id && !payload) {
-      return
-    }
-    const author = payload || store.state.personDetail[id]
-    const generateTitle = (works: Work[]) => {
-      works.forEach(w => {
-        w.titleToDisplay =  `${w.title} ${w.subtitle || ""}`
-      })
-    }
-    generateTitle(author.work)
-    generateTitle(author.wip);
-
-    const allWorks = (author.work || []).concat(author.wip || [])
-    allWorks.forEach( (w1: Work) => {
-      const w1Changed = allWorks.map( (w2: Work) => {
-        if (w1.work_id === w2.work_id) { return false}
-        if (w1.titleToDisplay === w2.titleToDisplay) {
-          w2.titleToDisplay = `${w2.titleToDisplay}（${w2.kana_type}）`
-          return true
-        }
-      }).some( (e: boolean) => e)
-      if (w1Changed) {
-        w1.titleToDisplay = `${w1.titleToDisplay}（${w1.kana_type}）`
+      return {
+        author: undefined
       }
-    })
-    
+    }
+    const author = payload || store.getters.getAuthor(id)
+    if (!author) {
+      return {
+        author: undefined
+      }
+    }
+    store.commit('setPersonDetail', { id, author })
+    store.dispatch('initAuthorWork', author)
 
-    // TODO 作品を頭文字であ行〜わ行に分類したいが、作品にかながついていないのでできない
     return {
       author
     }
