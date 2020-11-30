@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export default {
   target: 'static',
+  telemetry: true,
   /*
   ** Headers of the page
   */
