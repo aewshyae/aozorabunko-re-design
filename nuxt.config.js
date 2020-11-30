@@ -37,7 +37,7 @@ export default {
   */
   buildModules: [
     '@nuxt/typescript-build',
-    '@nuxtjs/dotenv',
+    '@nuxtjs/dotenv'
   ],
   /*
   ** Nuxt.js modules
@@ -65,7 +65,7 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend(config, _ctx) {
+    extend (config, _ctx) {
       config.node = {
         fs: 'empty'
       }
@@ -74,11 +74,11 @@ export default {
   generate: {
     interval: 1,
     fallback: true,
-    async routes() {
+    async routes () {
       try {
-        return await axios.get(process.env.NUXT_ENV_PERSON_DETAIL_URL).then(res => {
+        return await axios.get(process.env.NUXT_ENV_PERSON_DETAIL_URL).then((res) => {
           // NOTE tentative slicing workaround until `nuxt generate` execution time reduced
-          return res.data.slice(0, 2).map(p => {
+          return res.data.slice(0, 2).map((p) => {
             console.log(p.id)
             return {
               route: `/author/${p.id}`,
@@ -90,7 +90,7 @@ export default {
         console.error(e)
       }
     },
-    done({ duration, errors, _workerInfo }) {
+    done ({ duration, errors, _workerInfo }) {
       if (errors.length) {
         // TODO record errors or sth
       }
