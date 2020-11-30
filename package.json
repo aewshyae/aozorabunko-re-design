@@ -24,7 +24,6 @@
     "@nuxt/types": "^2.14.7",
     "@nuxt/typescript-build": "^0.6.7",
     "@nuxtjs/axios": "^5.12.2",
-    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^5.0.0",
     "@nuxtjs/eslint-config-typescript": "^1.0.0",
     "@nuxtjs/eslint-module": "^1.2.0",
