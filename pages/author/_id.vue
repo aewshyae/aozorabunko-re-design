@@ -22,6 +22,7 @@
         <h3 class="head">
           作家について
         </h3>
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <p class="desc" v-html="author.desc" />
       </div>
     </header>
