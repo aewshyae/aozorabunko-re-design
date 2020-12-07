@@ -1,13 +1,16 @@
 import axios from 'axios'
-require('dotenv').config()
 
 export default {
-  mode: 'universal',
+  target: 'static',
+  telemetry: true,
   /*
   ** Headers of the page
   */
   head: {
     title: process.env.npm_package_name || '',
+    htmlAttrs: {
+      lang: 'ja'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -36,16 +39,12 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxt/typescript-build',
-    '@nuxtjs/dotenv'
+    '@nuxt/typescript-build'
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://buefy.github.io/#/documentation
-    'nuxt-buefy',
-    '@nuxtjs/pwa',
     '@nuxtjs/axios',
     '@nuxtjs/style-resources'
   ],
@@ -74,6 +73,7 @@ export default {
   generate: {
     interval: 1,
     fallback: true,
+    crawler: false,
     async routes () {
       try {
         return await axios.get(process.env.NUXT_ENV_PERSON_DETAIL_URL).then((res) => {
@@ -89,12 +89,6 @@ export default {
       } catch (e) {
         console.error(e)
       }
-    },
-    done ({ duration, errors, _workerInfo }) {
-      if (errors.length) {
-        // TODO record errors or sth
-      }
-      console.log(`done! duration: ${duration}, errors: ${errors.length}`)
     }
   }
 }
