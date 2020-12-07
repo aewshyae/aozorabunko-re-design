@@ -45,9 +45,6 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://buefy.github.io/#/documentation
-    'nuxt-buefy',
-    '@nuxtjs/pwa',
     '@nuxtjs/axios',
     '@nuxtjs/style-resources'
   ],
@@ -76,6 +73,7 @@ export default {
   generate: {
     interval: 1,
     fallback: true,
+    crawler: false,
     async routes () {
       try {
         return await axios.get(process.env.NUXT_ENV_PERSON_DETAIL_URL).then((res) => {
@@ -91,12 +89,6 @@ export default {
       } catch (e) {
         console.error(e)
       }
-    },
-    done ({ duration, errors, _workerInfo }) {
-      if (errors.length) {
-        // TODO record errors or sth
-      }
-      console.log(`done! duration: ${duration}, errors: ${errors.length}`)
     }
   }
 }
