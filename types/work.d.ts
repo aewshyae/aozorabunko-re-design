@@ -10,6 +10,7 @@ export interface Work {
    author_num: number
    work_id: number
    person_id: number
+   author_id: number
  }
  work: {
    bibclass: string

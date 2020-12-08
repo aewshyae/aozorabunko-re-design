@@ -12,9 +12,9 @@
       </nuxt-link>
     </div>
     <div v-if="showDescription" class="description">
-      <h3 class="head">
+      <h2 class="head">
         作品について
-      </h3>
+      </h2>
       <div class="text">
         <p v-show="work.work_note" class="work_note">
           {{ work.work_note }}
@@ -27,12 +27,12 @@
         <p>初出： {{ work.first_appearance }}</p>
       </div>
     </div>
-    <iframe class="work-body" :src="workHTMLURL" />
   </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { Work } from 'types/work'
 
 export default Vue.extend({
   name: 'Book',
@@ -48,65 +48,30 @@ export default Vue.extend({
       if (!id && !payload) {
         return
       }
-      const book = payload || store.getters.getWork(id)
+      const book: Work = payload || store.getters.getWork(id)
+      const authorId = book.title.author_id.toString()
+      const filledAuthorId = '000000'.concat(authorId).slice(authorId.length),
+      const downloadHtml = (book.download || []).find(d => d.filename && d.filename.endsWith('html'))
+      const workHTMLURL = filledAuthorId && downloadHtml ? `https://www.aozora.gr.jp/cards/${filledAuthorId}/files/${downloadHtml.filename}` : undefined
+      const w = book.work
 
       return {
-        book
+        book,
+        work: w,
+        showDescription: w.work_note || w.note || w.first_appearance,
+        workHTMLURL
       }
     } catch (e) {
       console.error(e)
-      return {
-        book: {}
-      }
     }
   },
   data () {
     return {
-      book: undefined
+      book: undefined,
+      workHTMLBody: '',
+      workHTMLURL: ''
     }
   },
-  computed: {
-    work () {
-      return this.book ? this.book!.work : {}
-    },
-    showDescription () {
-      const w = this.work
-      if (!w) {
-        return
-      }
-      return w.work_note || w.note || w.first_appearance
-    },
-    authorID () {
-      if (!this.book) { return }
-      if (!this.book.title) { return }
-      const authorId = this.book.title.author_id.toString()
-      return '000000'.concat(authorId).slice(authorId.length)
-    },
-    workHTMLURL () {
-      const downloadHtml = (this.book.download || []).find(d => d.filename && d.filename.endsWith('html'))
-      if (!(this.authorID && downloadHtml)) { return }
-      return `https://www.aozora.gr.jp/cards/${this.authorID}/files/${downloadHtml.filename}`
-    }
-
-  },
-  mounted () {
-  },
-  methods: {
-    async getWorkHTMLBody () {
-      const downloadHtml = (this.book.download || []).find(d => d.filename && d.filename.endsWith('html'))
-      if (!downloadHtml) { return }
-      const url = `https://www.aozora.gr.jp/cards/${this.authorID}/files/${downloadHtml.filename}`
-      const html = await this.$axios.$get(url)
-      const e = document.createElement('div')
-      e.innerHTML = html
-      const mainText = e.querySelector('.main_text')
-      if (!mainText) {
-        this.workHTMLBody = html
-      } else {
-        this.workHTMLBody = mainText.innerHTML
-      }
-    }
-  }
 })
 </script>
 
@@ -119,7 +84,7 @@ h1.page-title {
 .title-caption {
   font-size: 0.7rem;
   font-weight: normal;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
   .kana {
     margin-right: 1rem;
   }
@@ -131,6 +96,7 @@ h1.page-title {
 }
 
 .description {
+  margin-top: 2rem;
   h3.head {
     font-weight: bold;
     font-size: 1.1em;
@@ -162,10 +128,5 @@ h2.section-title {
     text-decoration: underline;
     margin-bottom: 1rem;
   }
-}
-.work-body {
-  width: 100vw;
-  height: 100vh;
-  overflow: scroll;
 }
 </style>
