@@ -73,6 +73,7 @@ export default {
   },
   generate: {
     interval: 1,
+    concurrency: 100,
     fallback: true,
     crawler: false,
     routes
