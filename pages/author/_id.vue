@@ -19,9 +19,9 @@
       </div>
 
       <div class="description">
-        <h3 class="head">
+        <h2 class="head">
           作家について
-        </h3>
+        </h2>
         <!-- eslint-disable-next-line vue/no-v-html -->
         <p class="desc" v-html="author.desc" />
       </div>
@@ -33,10 +33,11 @@
           公開中の作品
         </h2>
         <ul>
-          <li>
+          <li
+            v-for="w in author.work"
+            :key="w.work_id"
+          >
             <nuxt-link
-              v-for="w in author.work"
-              :key="w.work_id"
               class="title published-link"
               :to="`/book/${w.work_id}`"
             >
@@ -119,7 +120,7 @@ h1.page-title {
 .title-caption {
   font-size: 0.7rem;
   font-weight: normal;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
   .kana {
     margin-right: 1rem;
   }
@@ -127,7 +128,7 @@ h1.page-title {
 
 .date {
   font-size: 0.7rem;
-  margin: 1.5rem 0;
+  margin: 1rem 0 2rem;
 }
 
 .description {

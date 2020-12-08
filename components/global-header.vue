@@ -41,7 +41,7 @@ export default Vue.extend({
   }
   .search {
     height: 100%;
-    width: 33.333%;
+    flex: auto;
     border-right: 1px solid $border;
     border-left: 1px solid $border;
     display: flex;
@@ -51,22 +51,26 @@ export default Vue.extend({
     .glass {
       height: 1.2rem;
       margin: 0.5rem;
+      margin-right: 0.2rem;
     }
     .text {
       letter-spacing: 0.1rem;
       font-weight: bold;
-      & > span {
-        display: inline-block;
-      }
+      flex-direction: column;
+      margin: 0.2rem;
     }
   }
   .menu {
-    width: 16.667%;
+    width: 70px;
     text-align: center;
     .three-lines {
       height: 1.5rem;
-      // margin: 1rem;
     }
+  }
+}
+@media screen and (max-width: 360px) {
+  .search .text{
+    display: flex;
   }
 }
 </style>
