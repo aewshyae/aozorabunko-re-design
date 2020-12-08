@@ -71,7 +71,7 @@ export default Vue.extend({
       workHTMLBody: '',
       workHTMLURL: ''
     }
-  },
+  }
 })
 </script>
 
