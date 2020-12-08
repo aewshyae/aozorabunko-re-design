@@ -50,7 +50,7 @@ export default Vue.extend({
       }
       const book: Work = payload || store.getters.getWork(id)
       const authorId = book.title.author_id.toString()
-      const filledAuthorId = '000000'.concat(authorId).slice(authorId.length),
+      const filledAuthorId = '000000'.concat(authorId).slice(authorId.length)
       const downloadHtml = (book.download || []).find(d => d.filename && d.filename.endsWith('html'))
       const workHTMLURL = filledAuthorId && downloadHtml ? `https://www.aozora.gr.jp/cards/${filledAuthorId}/files/${downloadHtml.filename}` : undefined
       const w = book.work
@@ -71,7 +71,7 @@ export default Vue.extend({
       workHTMLBody: '',
       workHTMLURL: ''
     }
-  },
+  }
 })
 </script>
 
