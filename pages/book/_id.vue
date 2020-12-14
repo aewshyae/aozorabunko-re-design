@@ -39,17 +39,18 @@ export default Vue.extend({
   components: {},
   filters: {
     stripHTML (text: string): string {
+      if (!text) { return '' }
       return text.replace(/<[^>]*>?/gm, '')
     }
   },
   validate ({ params }) {
     return /\d+/.test(params.id)
   },
-  asyncData ({ params, payload, store }) {
+  async asyncData ({ params, payload, store, $axios }) {
     try {
       const id = params.id
-      if (!id && !payload) {
-        return
+      if (!(payload || store.getters.isWorksInited)) {
+        await store.dispatch('initWorks', $axios)
       }
       const book: Work = payload || store.getters.getWork(id)
       const authorId = book.title.author_id.toString()
