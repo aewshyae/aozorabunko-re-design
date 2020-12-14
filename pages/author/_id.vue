@@ -12,9 +12,9 @@
       </div>
       <div class="date">
         (
-        <span class="birth">{{ author.born_on | parseDate }}</span>
+        <span class="birth">{{ bornOn }}</span>
         〜
-        <span class="passaway">{{ author.died_on | parseDate }}</span>
+        <span class="passaway">{{ diedOn }}</span>
         )
       </div>
 
@@ -66,6 +66,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Author, AuthorWork } from '@/types/author'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 
@@ -79,36 +80,48 @@ export default Vue.extend({
   name: 'Author',
   components: {
   },
-  filters: {
-    parseDate (d: string) {
-      try {
-        return dayjs(d).format('LL')
-      } catch (e) {
-        return d
-      }
-    }
-  },
   validate ({ params }) {
     return /\d+/.test(params.id)
   },
-  asyncData ({ params, payload, store }) {
+  async asyncData ({ params, payload, store, $axios }) {
     const id = params.id
-    if (!id && !payload) {
-      return {
-        author: undefined
-      }
+    if (!(payload || store.getters.isPersonDetailsInited)) {
+      await store.dispatch('initPersonDetails', $axios)
     }
-    const author = payload || store.getters.getAuthor(id)
+    const author: Author = payload || store.getters.getAuthor(id)
     if (!author) {
       return {
         author: undefined
       }
     }
-    store.commit('setPersonDetail', { id, author })
-    store.dispatch('initAuthorWork', author)
 
+    // TODO 作品を頭文字であ行〜わ行に分類したいが、作品にかながついていないのでできない
+    const updatePersonDetailWorkTitle = (w: AuthorWork, needKana: boolean) => {
+      const title = `${w.title} ${w.subtitle || ''}`
+      w.titleToDisplay = `${title}${needKana ? `（${w.kana_type}）` : ''}`
+    }
+    const allWorks = (author.work || []).concat(author.wip || []).sort((a, b) => a.work_id > b.work_id ? 1 : -1)
+    allWorks.forEach((w1: AuthorWork) => {
+      allWorks.forEach((w2: AuthorWork) => {
+        if (w1.work_id <= w2.work_id) { return }
+        const needKana = w1.title === w2.title && w1.subtitle === w2.subtitle
+        updatePersonDetailWorkTitle(w1, needKana)
+        updatePersonDetailWorkTitle(w2, needKana)
+      })
+    })
+
+    const parseDate = (d: string) => {
+      try {
+        if (!d) { return }
+        return dayjs(d).format('LL')
+      } catch (e) {
+        return d
+      }
+    }
     return {
-      author
+      author,
+      bornOn: parseDate(author.born_on),
+      diedOn: parseDate(author.died_on)
     }
   }
 })
