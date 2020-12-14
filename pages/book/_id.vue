@@ -37,13 +37,13 @@ import { Work } from 'types/work'
 export default Vue.extend({
   name: 'Book',
   components: {},
-  validate({params}) {
-    return /\d+/.test(params.id)
-  },
   filters: {
     stripHTML (text: string): string {
       return text.replace(/<[^>]*>?/gm, '')
     }
+  },
+  validate ({ params }) {
+    return /\d+/.test(params.id)
   },
   asyncData ({ params, payload, store }) {
     try {

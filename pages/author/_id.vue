@@ -79,9 +79,6 @@ export default Vue.extend({
   name: 'Author',
   components: {
   },
-  validate({params}) {
-    return /\d+/.test(params.id)
-  },
   filters: {
     parseDate (d: string) {
       try {
@@ -90,6 +87,9 @@ export default Vue.extend({
         return d
       }
     }
+  },
+  validate ({ params }) {
+    return /\d+/.test(params.id)
   },
   asyncData ({ params, payload, store }) {
     const id = params.id
