@@ -39,7 +39,7 @@ export default Vue.extend({
   components: {},
   filters: {
     stripHTML (text: string): string {
-      if (!text) { return ""}
+      if (!text) { return '' }
       return text.replace(/<[^>]*>?/gm, '')
     }
   },
