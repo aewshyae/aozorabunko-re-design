@@ -42,14 +42,6 @@ export const mutations: MutationTree<RootState> = {
 }
 
 export const actions: ActionTree<RootState, RootState> = {
-  async nuxtServerInit({ state, dispatch }, { $axios }) {
-    try {
-      await dispatch('initPersonDetail', $axios)
-      await dispatch('initWorks', $axios)
-    } catch (e) {
-      console.error(e)
-    }
-  },
   async initPersonDetail({ commit }, $axios) {
     try {
       const personDetailArray: Author[] = await $axios.$get(process.env.PERSON_DETAIL_URL!)
