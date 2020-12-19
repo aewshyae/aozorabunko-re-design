@@ -18,12 +18,12 @@
         )
       </div>
 
-      <div class="description">
+      <div v-if="showDesc" class="description">
         <h2 class="head">
           作家について
         </h2>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <p class="desc" v-html="author.desc" />
+        <p class="desc" v-html="desc" />
       </div>
     </header>
 
@@ -32,7 +32,7 @@
         <h2 class="section-title">
           公開中の作品
         </h2>
-        <ul>
+        <ul v-if="Array.isArray(author.work) && author.work.length > 0">
           <li
             v-for="w in author.work"
             :key="w.work_id"
@@ -45,12 +45,13 @@
             </nuxt-link>
           </li>
         </ul>
+        <span v-else>（なし）</span>
       </div>
       <div class="workings">
         <h2 class="section-title">
           作業中の作品
         </h2>
-        <ul>
+        <ul v-if="Array.isArray(author.wip) && author.wip.length > 0">
           <li>
             <span
               v-for="w in author.wip"
@@ -59,6 +60,7 @@
             >{{ w.titleToDisplay }}</span>
           </li>
         </ul>
+        <span v-else>（なし）</span>
       </div>
     </div>
   </section>
@@ -120,8 +122,12 @@ export default Vue.extend({
         return d
       }
     }
+    
+    const desc = (author!.desc || "").trim()
     return {
       author,
+      desc,
+      showDesc: desc.length > 0,
       bornOn: parseDate(author.born_on),
       diedOn: parseDate(author.died_on)
     }
@@ -150,7 +156,7 @@ h1.page-title {
 }
 
 .description {
-  h3.head {
+  .head {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 0.2rem;
@@ -174,6 +180,11 @@ h2.section-title {
     display: block;
     text-decoration: underline;
     margin-bottom: 1rem;
+  }
+  .workings {
+    .title {
+      text-decoration: none;
+    }
   }
 }
 </style>

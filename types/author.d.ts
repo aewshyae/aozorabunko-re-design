@@ -10,9 +10,10 @@ export interface AuthorWork {
     role: string
   }>
 }
-interface Author {
+export interface Author {
   id: number
   name: string
+  desc?: string
   alt_id: number
   alt_name: string
   name_kana: string
