@@ -20,7 +20,7 @@
           {{ work.work_note }}
         </p>
         <p v-show="work.note" class="note">
-          {{ work.note | stripHTML }}
+          {{ note }}
         </p>
       </div>
       <div v-show="work.first_appearance" class="first-edition">
@@ -37,12 +37,6 @@ import { Work } from 'types/work'
 export default Vue.extend({
   name: 'Book',
   components: {},
-  filters: {
-    stripHTML (text: string): string {
-      if (!text) { return '' }
-      return text.replace(/<[^>]*>?/gm, '')
-    }
-  },
   validate ({ params }) {
     return /\d+/.test(params.id)
   },
@@ -59,10 +53,13 @@ export default Vue.extend({
       const workHTMLURL = filledAuthorId && downloadHtml ? `https://www.aozora.gr.jp/cards/${filledAuthorId}/files/${downloadHtml.filename}` : undefined
       const w = book.work
 
+      const note = w.note ? w.note.replace(/<[^>]*>?(\n)?/gm, '') : ""
+      const showTexts = (...texts: Array<string | undefined>) => texts.some(str => str && str.length > 0)
       return {
         book,
         work: w,
-        showDescription: w.work_note || w.note || w.first_appearance,
+        note,
+        showDescription: showTexts(w.work_note, note, w.first_appearance),
         workHTMLURL
       }
     } catch (e) {
@@ -101,7 +98,7 @@ h1.page-title {
 
 .description {
   margin-top: 2rem;
-  h3.head {
+  .head {
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 0.2rem;
