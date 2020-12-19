@@ -95,13 +95,15 @@ export default Vue.extend({
       }
     }
 
+    // TODO この処理はJSON生成時にサーバサイドに移動したい
     // TODO 作品を頭文字であ行〜わ行に分類したいが、作品にかながついていないのでできない
-    const updatePersonDetailWorkTitle = (w: AuthorWork, needKana: boolean) => {
+    const updatePersonDetailWorkTitle = (w: AuthorWork, needKana: boolean = false) => {
       const title = `${w.title} ${w.subtitle || ''}`
       w.titleToDisplay = `${title}${needKana ? `（${w.kana_type}）` : ''}`
     }
     const allWorks = (author.work || []).concat(author.wip || []).sort((a, b) => a.work_id > b.work_id ? 1 : -1)
     allWorks.forEach((w1: AuthorWork) => {
+      updatePersonDetailWorkTitle(w1)
       allWorks.forEach((w2: AuthorWork) => {
         if (w1.work_id <= w2.work_id) { return }
         const needKana = w1.title === w2.title && w1.subtitle === w2.subtitle
