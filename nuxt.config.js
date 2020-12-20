@@ -1,4 +1,6 @@
 import routes from './routes'
+const isProd = process.env.NODE_ENV === 'production'
+const urlBase = isProd ? '/aozorabunko-re-design_pages/' : '/'
 
 export default {
   target: 'static',
@@ -56,7 +58,9 @@ export default {
   },
   env: {
     PERSON_DETAIL_URL: process.env.NUXT_ENV_PERSON_DETAIL_URL,
-    BOOK_CARD_URL: process.env.NUXT_ENV_BOOK_CARD_URL
+    BOOK_CARD_URL: process.env.NUXT_ENV_BOOK_CARD_URL,
+    URL_BASE: urlBase,
+    IS_PROD: isProd
   },
   /*
   ** Build configuration
@@ -70,6 +74,10 @@ export default {
         fs: 'empty'
       }
     }
+  },
+  router: {
+    base: urlBase,
+    prefetchPayloads: false
   },
   generate: {
     interval: 1,
