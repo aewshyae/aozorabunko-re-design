@@ -53,7 +53,7 @@ export default Vue.extend({
       const workHTMLURL = filledAuthorId && downloadHtml ? `https://www.aozora.gr.jp/cards/${filledAuthorId}/files/${downloadHtml.filename}` : undefined
       const w = book.work
 
-      const note = w.note ? w.note.replace(/<[^>]*>?(\n)?/gm, '') : ""
+      const note = w.note ? w.note.replace(/<[^>]*>?(\n)?/gm, '') : ''
       const showTexts = (...texts: Array<string | undefined>) => texts.some(str => str && str.length > 0)
       return {
         book,

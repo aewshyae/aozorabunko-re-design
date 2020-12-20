@@ -122,8 +122,11 @@ export default Vue.extend({
         return d
       }
     }
-    
-    const desc = (author!.desc || "").trim()
+
+    // TODO この処理はJSON生成時にサーバサイドに移動したい
+    let desc = (author!.desc || '').trim()
+    desc = desc.replace(/src="\.\.\/images\/wikipedia_logo_rounded\.png"/g, `src="${process.env.URL_BASE}images/wikipedia_logo_rounded.png"`)
+
     return {
       author,
       desc,
