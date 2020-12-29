@@ -86,11 +86,9 @@ export default Vue.extend({
     return /\d+/.test(params.id)
   },
   async asyncData ({ params, payload, store, $axios }) {
-    const id = params.id
-    if (!(payload || store.getters.isPersonDetailsInited)) {
-      await store.dispatch('initPersonDetails', $axios)
-    }
-    const author: Author = payload || store.getters.getAuthor(id)
+    const id = Number.parseInt(params.id)
+    const authors = payload || await $axios.$get(process.env.PERSON_DETAIL_URL!) || []
+    const author: Author = payload || authors.find((e: { id: number }) => e.id === id)
     if (!author) {
       return {
         author: undefined
@@ -99,18 +97,23 @@ export default Vue.extend({
 
     // TODO この処理はJSON生成時にサーバサイドに移動したい
     // TODO 作品を頭文字であ行〜わ行に分類したいが、作品にかながついていないのでできない
-    const updatePersonDetailWorkTitle = (w: AuthorWork, needKana: boolean = false) => {
+    const updatePersonDetailWorkTitle = (w: AuthorWork) => {
       const title = `${w.title} ${w.subtitle || ''}`
-      w.titleToDisplay = `${title}${needKana ? `（${w.kana_type}）` : ''}`
+      const kana = w.needKanaType ? ` （${w.kana_type}）` : ''
+      w.titleToDisplay = `${title}${kana}`
     }
     const allWorks = (author.work || []).concat(author.wip || []).sort((a, b) => a.work_id > b.work_id ? 1 : -1)
     allWorks.forEach((w1: AuthorWork) => {
-      updatePersonDetailWorkTitle(w1)
       allWorks.forEach((w2: AuthorWork) => {
-        if (w1.work_id <= w2.work_id) { return }
+        if (w1.work_id > w2.work_id) { return }
         const needKana = w1.title === w2.title && w1.subtitle === w2.subtitle
-        updatePersonDetailWorkTitle(w1, needKana)
-        updatePersonDetailWorkTitle(w2, needKana)
+        if (needKana && w1.work_id !== w2.work_id) {
+          w1.needKanaType = true
+          w2.needKanaType = true
+        }
+        updatePersonDetailWorkTitle(w1)
+        updatePersonDetailWorkTitle(w2)
+
       })
     })
 
@@ -139,6 +142,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.author {
+  padding: 1.2rem;
+}
 h1.page-title {
   font-size: 2rem;
   font-weight: bold;

@@ -2,11 +2,21 @@
   <section v-if="book" class="book">
     <section class="detail">
       <div v-if="book.title" class="title">
-        <h1 v-if="book.title.title" class="page-title">
-          {{ book.title.title }}
-        </h1>
-        <p class="title-caption">
-          {{ book.title.title_kana }}
+        <div class="titles">
+          <h1 class="book-title">
+            {{ book.title.title }}
+          </h1>
+          <h2 class="book-subtitle">
+            {{ book.title.subtitle }}
+          </h2>
+        </div>
+        <p class="caption">
+          <span class="title-caption">
+            {{ book.title.title_kana }}
+          </span>
+          <span class="title-caption">
+            {{ book.title.subtitle_kana }}
+          </span>
         </p>
         <nuxt-link class="author" :to="`/author/${book.title.person_id}`">
           {{ book.title.person_name }}
@@ -72,7 +82,13 @@
     </section>
     <section class="text-body">
       <client-only>
-        <iframe :src="workHTMLURL" :title="`${book.title.title}の本文`" loading="lazy" frameborder="0"></iframe>
+        <iframe
+          :src="workHTMLURL"
+          :title="`${book.title.title}の本文`"
+          loading="lazy"
+          frameborder="0"
+          :class="{'with-subtitle': book.title.subtitle}"
+          />
       </client-only>
     </section>
   </section>
@@ -185,17 +201,24 @@ section.detail, section.icons {
   background-color: $base-background;
   padding: 1.2rem;
 }
-h1.page-title {
-  font-size: 2rem;
-  font-weight: bold;
+.titles {
+  margin-bottom: 0.5rem;
+  .book-title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  .book-subtitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
 }
 
-.title-caption {
+.caption {
   font-size: 0.7rem;
   font-weight: normal;
-  margin-bottom: 0.5rem;
-  .kana {
-    margin-right: 1rem;
+  margin-bottom: 2rem;
+  span {
+    display: inline-block;
   }
 }
 
@@ -228,15 +251,6 @@ h2.section-title {
   font-weight: bold;
   margin-top: 2rem;
   margin-bottom: 1rem;
-}
-.works {
-  .title {
-    font-size: 1rem;
-    font-weight: normal;
-    display: block;
-    text-decoration: underline;
-    margin-bottom: 1rem;
-  }
 }
 section.icons {
   padding: 1.2rem 1.2rem 0;
@@ -281,7 +295,7 @@ section.icons {
   }
   p.excuse {
     font-size: 0.9rem;
-    margin: 1rem 0;
+    margin: 1rem 0 3rem;
     span {
       display: inline-block;
     }
@@ -299,6 +313,7 @@ section.icons {
   }
   iframe {
     border: 1px solid $gray;
+    border-top: none;
     width: 100%;
     height: calc(100vh + 150px);
     position: relative;
@@ -306,6 +321,10 @@ section.icons {
     top: -250px;
     overflow: scroll;
     padding-bottom: 0.5rem;
+    &.with-subtitle {
+      top: -350px;
+      height: calc(100vh + 250px);
+    }
   }
 }
 </style>
