@@ -41,39 +41,37 @@
     </section>
     <section class="icons">
       <h2>縦書き表示・ダウンロード・シェア</h2>
-      <client-only>
-        <ul class="circles">
-          <li class="icon" v-for="e in icons" :key="e.name">
-            <button
-              v-if="e.key === 'twitter'"
-              class="link"
-              @click="shareOnTwitter"
-              >
-              <img :class="e.key" :src="require(`~/assets/img/icons/${e.filename}`)" :alt="e.name">
-              </button
+      <ul class="circles">
+        <li class="icon" v-for="e in icons" :key="e.name">
+          <button
+            v-if="e.key === 'twitter'"
+            class="link"
+            @click="shareOnTwitter"
             >
-            <button
-              v-else-if="e.download"
-              class="link"
-              :href="e.url"
-              :download="true"
-              >
-              <img :class="e.key" :src="require(`~/assets/img/icons/${e.filename}`)" :alt="e.name">
-              </button
+            <img :class="e.key" :src="require(`~/assets/img/icons/${e.filename}`)" :alt="e.name">
+            </button
+          >
+          <button
+            v-else-if="e.download"
+            class="link"
+            :href="e.url"
+            :download="true"
             >
-            <a
-              v-else
-              class="link"
-              target="_blank"
-              rel="noreferrer"
-              :href="e.url"
-              >
-              <img :class="e.key" :src="require(`~/assets/img/icons/${e.filename}`)" :alt="e.name">
-              </a
+            <img :class="e.key" :src="require(`~/assets/img/icons/${e.filename}`)" :alt="e.name">
+            </button
+          >
+          <a
+            v-else
+            class="link"
+            target="_blank"
+            rel="noreferrer"
+            :href="e.url"
             >
-          </li>
-        </ul>
-      </client-only>
+            <img :class="e.key" :src="require(`~/assets/img/icons/${e.filename}`)" :alt="e.name">
+            </a
+          >
+        </li>
+      </ul>
       <p class="excuse">
         <span> ファイルのご利用については、</span>
         <span>「<a href="https://www.aozora.gr.jp/guide/kijyunn.html">収録ファイルの取扱い基準</a>」をご確認ください。</span>
@@ -81,15 +79,13 @@
       <h2>本文</h2>
     </section>
     <section class="text-body">
-      <client-only>
-        <iframe
-          :src="workHTMLURL"
-          :title="`${book.title.title}の本文`"
-          loading="lazy"
-          frameborder="0"
-          :class="{'with-subtitle': book.title.subtitle}"
-          />
-      </client-only>
+      <iframe
+        :src="workHTMLURL"
+        :title="`${book.title.title}の本文`"
+        loading="lazy"
+        frameborder="0"
+        :class="{'with-subtitle': book.title.subtitle}"
+        />
     </section>
   </section>
 </template>
