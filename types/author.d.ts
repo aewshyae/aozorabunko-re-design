@@ -9,6 +9,7 @@ export interface AuthorWork {
     person_name: string
     role: string
   }>
+  needKanaType?: boolean
 }
 export interface Author {
   id: number
