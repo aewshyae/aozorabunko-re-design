@@ -48,7 +48,7 @@
             class="link"
             @click="shareOnTwitter"
             >
-            <img :class="e.key" :src="require(`~/assets/img/icons/${e.filename}`)" :alt="e.name">
+            <img :class="e.key" :src="`/images/${e.filename}`" :alt="e.name">
             </button
           >
           <button
@@ -57,7 +57,7 @@
             :href="e.url"
             :download="true"
             >
-            <img :class="e.key" :src="require(`~/assets/img/icons/${e.filename}`)" :alt="e.name">
+            <img :class="e.key" :src="`/images/${e.filename}`" :alt="e.name">
             </button
           >
           <a
@@ -67,7 +67,7 @@
             rel="noreferrer"
             :href="e.url"
             >
-            <img :class="e.key" :src="require(`~/assets/img/icons/${e.filename}`)" :alt="e.name">
+            <img :class="e.key" :src="`/images/${e.filename}`" :alt="e.name">
             </a
           >
         </li>

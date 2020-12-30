@@ -30,7 +30,7 @@ export default Vue.extend({
   width: auto;
   max-width: none;
   position: relative;
-  background-image: url("~assets/img/top.jpg");
+  background-image: url("/images/top.jpg");
   background-repeat: no-repeat;
   background-position: 75% 0;
   background-size: cover;
