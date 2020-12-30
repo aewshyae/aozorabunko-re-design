@@ -1,7 +1,8 @@
 <template>
   <div class="top">
     <GlobalHeader />
-    <div class="top-img">
+    <div class="top-img" >
+      <img class="hero" src="images/top.jpg" alt="青空文庫">
       <p class="text">
         青空のように
         自由な、
@@ -27,13 +28,15 @@ export default Vue.extend({
 .top-img {
   overflow: hidden;
   height: 80vh;
-  width: auto;
+  width: 100%;
   max-width: none;
   position: relative;
-  background-image: url("/images/top.jpg");
-  background-repeat: no-repeat;
-  background-position: 75% 0;
-  background-size: cover;
+  .hero {
+    max-height: 100%;
+    min-width: 100%;
+    position: absolute;
+    right: 0;
+  }
   .text {
     writing-mode: vertical-rl;
     white-space: pre-line;
@@ -44,6 +47,8 @@ export default Vue.extend({
     font-family: serif;
     font-size: 1.4rem;
     letter-spacing: 0.2rem;
+    position: absolute;
+    top: 0;
   }
 }
 .root {
