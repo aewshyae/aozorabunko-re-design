@@ -1,14 +1,14 @@
 <template>
   <div class="global-header">
     <div class="logo">
-      <img src="/images/mobile/logo.png" alt="ロゴ" class="logo-img">
+      <img src="images/mobile/logo.png" alt="ロゴ" class="logo-img">
     </div>
     <div class="search">
-      <img src="/images/mobile/glass.png" alt="検索" class="glass">
+      <img src="images/mobile/glass.png" alt="検索" class="glass">
       <span class="text"><span>作品</span><span>検索</span></span>
     </div>
     <div class="menu">
-      <img src="/images/mobile/three-lines.png" alt="メニュー" class="three-lines">
+      <img src="images/mobile/three-lines.png" alt="メニュー" class="three-lines">
     </div>
   </div>
 </template>
