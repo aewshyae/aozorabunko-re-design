@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <GlobalHeader />
-    <div class="top-img" >
+    <div class="top-img">
       <img class="hero" src="images/top.jpg" alt="青空文庫">
       <p class="text">
         青空のように

@@ -42,34 +42,31 @@
     <section class="icons">
       <h2>縦書き表示・ダウンロード・シェア</h2>
       <ul class="circles">
-        <li class="icon" v-for="e in icons" :key="e.name">
+        <li v-for="e in icons" :key="e.name" class="icon">
           <button
             v-if="e.key === 'twitter'"
             class="link"
             @click="shareOnTwitter"
-            >
-            <img :class="e.key" :src="`images/${e.filename}`" :alt="e.name">
-            </button
           >
+            <img :class="e.key" :src="`images/${e.filename}`" :alt="e.name">
+          </button>
           <button
             v-else-if="e.download"
             class="link"
             :href="e.url"
             :download="true"
-            >
-            <img :class="e.key" :src="`images/${e.filename}`" :alt="e.name">
-            </button
           >
+            <img :class="e.key" :src="`images/${e.filename}`" :alt="e.name">
+          </button>
           <a
             v-else
             class="link"
             target="_blank"
             rel="noreferrer"
             :href="e.url"
-            >
-            <img :class="e.key" :src="`images/${e.filename}`" :alt="e.name">
-            </a
           >
+            <img :class="e.key" :src="`images/${e.filename}`" :alt="e.name">
+          </a>
         </li>
       </ul>
       <p class="excuse">
@@ -85,7 +82,7 @@
         loading="lazy"
         frameborder="0"
         :class="{'with-subtitle': book.title.subtitle}"
-        />
+      />
     </section>
   </section>
 </template>
