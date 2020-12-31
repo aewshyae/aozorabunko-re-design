@@ -85,7 +85,7 @@ export default Vue.extend({
   validate ({ params }) {
     return /\d+/.test(params.id)
   },
-  async asyncData ({ params, payload, store, $axios }) {
+  async asyncData ({ params, payload, $axios }) {
     const id = Number.parseInt(params.id)
     const authors = payload || await $axios.$get(process.env.PERSON_DETAIL_URL!) || []
     const author: Author = payload || authors.find((e: { id: number }) => e.id === id)
