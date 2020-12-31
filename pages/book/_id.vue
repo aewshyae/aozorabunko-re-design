@@ -97,13 +97,12 @@ export default Vue.extend({
   validate({ params }) {
     return /\d+/.test(params.id);
   },
-  async asyncData({ params, payload, store, $axios }) {
+  async asyncData({ params, payload, $axios }) {
     try {
-      const id = params.id;
-      if (!(payload || store.getters.isWorksInited)) {
-        await store.dispatch("initWorks", $axios);
-      }
-      const book: Work = payload || store.getters.getWork(id);
+      const id = Number.parseInt(params.id)
+      const books: Work[] = payload || await $axios.$get(process.env.BOOK_CARD_URL!) || []
+      const book: Work = payload || books.find((e: Work) => e.title.work_id === id)
+
       const authorId = book.title.author_id.toString();
       const workId = book.title.work_id;
 
