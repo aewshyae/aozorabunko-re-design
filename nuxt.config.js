@@ -4,7 +4,6 @@ const urlBase = isProd ? '/aozorabunko-re-design_pages/' : '/'
 
 export default {
   target: 'static',
-  ssr: false,
   modern: 'client',
   telemetry: true,
   /*
