@@ -18,6 +18,7 @@
 import Vue from 'vue'
 import GlobalHeader from '~/components/global-header.vue'
 export default Vue.extend({
+  name: 'TopLayout',
   components: {
     GlobalHeader
   }
