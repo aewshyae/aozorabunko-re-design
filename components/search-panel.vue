@@ -5,11 +5,13 @@
       <img src="images/search-glass.png" alt="検索" class="glass">
     </section>
     <article class="indices">
-      <section v-for="indice in indices" :key="indice.key" class="indice-by" :class="indice.key">
+      <section v-for="indice in indices" :key="indice.key" class="indice-by" :class="indice.cssClass">
         <h2>{{ indice.label }}</h2>
         <ul class="links">
           <li v-for="e in indice.list" :key="e.key" class="link">
-            {{ e.label }}
+            <nuxt-link :to="`/${indice.key}/${e.key}`">
+              {{ e.label }}
+            </nuxt-link>
           </li>
         </ul>
       </section>
@@ -25,7 +27,7 @@ import Vue from 'vue'
 const NDC1 = require('@/static/ndc_class_1.json')
 
 type KeyLabel = {key:string, label: string}
-type Indice = KeyLabel & { list: KeyLabel[] }
+type Indice = KeyLabel & { list: KeyLabel[], cssClass: string }
 
 export default Vue.extend({
   name: 'SearchPanel',
@@ -41,7 +43,8 @@ export default Vue.extend({
     indices(): Indice[] {
       return [
         {
-          key: "author",
+          key: "authors/index",
+          cssClass: "author",
           label: "作者別",
           list: [
             ...this.initials,
@@ -52,7 +55,8 @@ export default Vue.extend({
           ]
         },
         {
-          key: "book",
+          key: "books/index",
+          cssClass: "book",
           label: "作品別",
           list: [
             ...this.initials,
@@ -63,7 +67,8 @@ export default Vue.extend({
           ]
         },
         {
-          key: "ndc",
+          key: "books/ndc",
+          cssClass: "ndc",
           label: "分類別",
           list: Object.entries(NDC1).map(([k,v]): KeyLabel => ({
             key: `${k}`,
@@ -144,6 +149,9 @@ export default Vue.extend({
         margin: -1px 0 0 -1px;
         padding: 0.9rem 1rem 0.8rem;
         vertical-align: text-bottom;
+        a {
+          text-decoration: none;
+        }
       &:last-child {
         grid-column: span 2;
       }
