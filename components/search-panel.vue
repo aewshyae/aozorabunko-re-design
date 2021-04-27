@@ -1,21 +1,21 @@
 <template>
-  <nav class="search-panel">
-    <section class="search-words" >
-      <input type="text" v-model="keyword" placeholder="作者名・作品名・キーワードで探す">
-      <img src="images/search-glass.png" alt="検索" class="glass" />
+  <nav class="search-panel" :class="{ 'shown': showSearch }">
+    <section class="search-words">
+      <input v-model="keyword" type="text" placeholder="作者名・作品名・キーワードで探す">
+      <img src="images/search-glass.png" alt="検索" class="glass">
     </section>
     <article class="indices">
-      <section class="indice-by" v-for="indice in indices" :key="indice.key" :class="indice.key">
-        <h2>{{indice.label}}</h2>
+      <section v-for="indice in indices" :key="indice.key" class="indice-by" :class="indice.key">
+        <h2>{{ indice.label }}</h2>
         <ul class="links">
-          <li class="link" v-for="e in indice.list" :key="e.key">
-            {{e.label}}
+          <li v-for="e in indice.list" :key="e.key" class="link">
+            {{ e.label }}
           </li>
         </ul>
       </section>
     </article>
     <button class="close">
-      <img src="images/close.png" alt="閉じる" class="close" />
+      <img src="images/close.png" alt="閉じる" class="close" @click.stop="close">
     </button>
   </nav>
 </template>
@@ -83,6 +83,11 @@ export default Vue.extend({
       })
       return result
     }
+  },
+  methods: {
+    close() {
+      this.$emit("close-search")
+    }
   }
 })
 </script>
@@ -91,6 +96,15 @@ export default Vue.extend({
 @import "~assets/css/color";
 .search-panel {
   font-family: monospace;
+  width: 100%;
+  background: white;
+  transition: all 0.5s ease;
+  opacity: 0;
+  visibility: hidden;
+  &.shown {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 .search-words {
   padding: 1rem;
@@ -152,7 +166,7 @@ button.close {
   width: 100%;
   margin-bottom: 2rem;
   img {
-    height: 2rem;
+    height: 1.5rem;
     margin: auto;
   }
 }
