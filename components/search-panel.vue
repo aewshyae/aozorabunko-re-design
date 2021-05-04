@@ -43,7 +43,7 @@ export default Vue.extend({
     indices(): Indice[] {
       return [
         {
-          key: "authors/index",
+          key: "authors",
           cssClass: "author",
           label: "作者別",
           list: [
@@ -55,8 +55,8 @@ export default Vue.extend({
           ]
         },
         {
-          key: "books/index",
-          cssClass: "book",
+          key: "works",
+          cssClass: "work",
           label: "作品別",
           list: [
             ...this.initials,
@@ -67,7 +67,7 @@ export default Vue.extend({
           ]
         },
         {
-          key: "books/ndc",
+          key: "works/ndc",
           cssClass: "ndc",
           label: "分類別",
           list: Object.entries(NDC1).map(([k,v]): KeyLabel => ({

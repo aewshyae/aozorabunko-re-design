@@ -5,20 +5,20 @@ export default async function routes () {
     const authors = await axios.get(process.env.NUXT_ENV_PERSON_DETAIL_URL).then((res) => {
       return res.data.map((p) => {
         return {
-          route: `/author/${p.id}`,
+          route: `/authors/${p.id}`,
           payload: p
         }
       })
     })
-    const books = await axios.get(process.env.NUXT_ENV_BOOK_CARD_URL).then((res) => {
+    const works = await axios.get(process.env.NUXT_ENV_BOOK_CARD_URL).then((res) => {
       return res.data.map((b) => {
         return {
-          route: `/book/${b.title.work_id}`,
+          route: `/works/${b.title.work_id}`,
           payload: b
         }
       })
     })
-    return authors.concat(books)
+    return authors.concat(works)
   } catch (e) {
     console.error(e)
   }
