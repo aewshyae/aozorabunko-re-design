@@ -133,9 +133,10 @@ export default Vue.extend({
   .indice-by {
     h2 {
       color: $primary;
-      font-size: 1.1rem;
-      font-weight: normal;
+      font-size: 1rem;
+      font-weight: bold;
       margin-bottom: 0.3rem;
+      letter-spacing: 3px;
     }
     .links {
       margin-top: 0;
@@ -178,6 +179,41 @@ button.close {
     margin: auto;
   }
 }
-@media screen and (max-width: 360px) {
+@media (min-width: 426px) {
+  .search-words {
+    max-width: 400px;
+    padding-left: 3rem;
+    input {
+      padding: 0.5rem 2rem;
+    }
+    .glass {
+      top: 1.5rem;
+      right: 1rem;
+
+    }
+  }
+  .indices {
+    .indice-by {
+      border-top: 1px solid $border;
+      padding: 1.5rem 1.5rem 1rem;
+      h2 {
+        display: inline-block;
+        padding-right: 1.5rem;
+          margin-bottom: 0.5rem;
+      }
+      .links {
+        display: inline-flex;
+        flex-wrap: wrap;
+        padding: 0;
+        margin-bottom: 0;
+        & > .link {
+          padding: 0 1.5rem;
+          margin-bottom: 0.5rem;
+          border-top: none;
+          border-bottom: none;
+        }
+      }
+    }
+  }
 }
 </style>
