@@ -1,10 +1,10 @@
 <template>
   <nav class="search-panel" :class="{ 'shown': showSearch }">
-    <section class="search-words">
-      <input v-model="keyword" type="text" placeholder="作者名・作品名・キーワードで探す">
-      <img src="images/search-glass.png" alt="検索" class="glass">
-    </section>
     <article class="indices">
+      <section class="search-words">
+        <input v-model="keyword" type="text" placeholder="作者名・作品名・キーワードで探す">
+        <img src="images/search-glass.png" alt="検索" class="glass">
+      </section>
       <section v-for="indice in indices" :key="indice.key" class="indice-by" :class="indice.cssClass">
         <h2>{{ indice.label }}</h2>
         <ul class="links">
@@ -112,7 +112,7 @@ export default Vue.extend({
   }
 }
 .search-words {
-  padding: 1rem;
+  margin: 2rem 0;
   position: relative;
   input {
     font-size: 1rem;
@@ -124,13 +124,14 @@ export default Vue.extend({
   }
   .glass {
     position: absolute;
-    right: 2rem;
-    top: 2rem;
+    right: 1rem;
+    top: 1rem;
   }
 }
 .indices {
   margin: 1rem;
   .indice-by {
+    margin-bottom: 2rem;
     h2 {
       color: $primary;
       font-size: 1rem;
@@ -140,7 +141,6 @@ export default Vue.extend({
     }
     .links {
       margin-top: 0;
-      margin-bottom: 2rem;
       text-align: center;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -182,12 +182,12 @@ button.close {
 @media (min-width: 426px) {
   .search-words {
     max-width: 400px;
-    padding-left: 3rem;
     input {
       padding: 0.5rem 2rem;
+      width: calc(100% - 4rem);
     }
     .glass {
-      top: 1.5rem;
+      top: 0.5rem;
       right: 1rem;
 
     }
@@ -196,6 +196,7 @@ button.close {
     .indice-by {
       border-top: 1px solid $border;
       padding: 1.5rem 1.5rem 1rem;
+      margin-bottom: 1rem;
       h2 {
         display: inline-block;
         padding-right: 1.5rem;
