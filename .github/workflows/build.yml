@@ -18,6 +18,9 @@ jobs:
     env:
       NUXT_ENV_PERSON_DETAIL_URL: https://raw.githubusercontent.com/takahashim/aozora_json_scrape/master/person_detail.json
       NUXT_ENV_BOOK_CARD_URL: https://raw.githubusercontent.com/takahashim/aozora_json_scrape/master/card.json
+      NUXT_ENV_INDEX_BY_BIBCLASS_URL: https://raw.githubusercontent.com/takahashim/aozora_json_scrape/master/index_work_ids_by_bibclass.json
+      NUXT_ENV_INDEX_BY_WORK_TITLE_URL: https://raw.githubusercontent.com/takahashim/aozora_json_scrape/master/index_work_ids_by_initial.json
+      NUXT_ENV_INDEX_BY_PERSON_NAME_URL: https://raw.githubusercontent.com/takahashim/aozora_json_scrape/master/index_person_ids_by_initial.json
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
