@@ -43,7 +43,7 @@ export default Vue.extend({
     indices(): Indice[] {
       return [
         {
-          key: "authors/index",
+          key: "authors",
           cssClass: "author",
           label: "作者別",
           list: [
@@ -55,7 +55,7 @@ export default Vue.extend({
           ]
         },
         {
-          key: "works/index",
+          key: "works",
           cssClass: "work",
           label: "作品別",
           list: [
