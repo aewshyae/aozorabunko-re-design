@@ -16,7 +16,7 @@
         >
       </div>
     </div>
-    <SearchPanel :show-search="searchShown" @closeSearch="toggleSearch" />
+    <SearchPanel :show-search="searchShown" @close-search="toggleSearch" />
   </header>
 </template>
 
