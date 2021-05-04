@@ -33,6 +33,14 @@ ul {
 iframe {
   border: 0;
 }
+a {
+  text-decoration: underline;
+  color: $base-text;
+  &:visited {
+    color: $base-text;
+  }
+}
+
 .desc {
   a {
     display: inline-block;
