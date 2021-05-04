@@ -18,7 +18,7 @@
             {{ book.title.subtitle_kana }}
           </span>
         </p>
-        <nuxt-link class="author" :to="`/author/${book.title.person_id}`">
+        <nuxt-link class="author" :to="`/authors/${book.title.person_id}`">
           {{ book.title.person_name }}
         </nuxt-link>
       </div>
@@ -92,7 +92,7 @@ import Vue from "vue";
 import { Work } from "types/work";
 
 export default Vue.extend({
-  name: "Book",
+  name: "WorksDetail",
   components: {},
   validate({ params }) {
     return /\d+/.test(params.id);

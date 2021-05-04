@@ -39,7 +39,7 @@
           >
             <nuxt-link
               class="title published-link"
-              :to="`/book/${w.work_id}`"
+              :to="`/works/${w.work_id}`"
             >
               {{ w.titleToDisplay }}
             </nuxt-link>
