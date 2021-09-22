@@ -129,6 +129,8 @@ export default Vue.extend({
   }
 }
 .indices {
+  display: grid;
+  justify-content: center;
   margin: 1rem;
   .indice-by {
     margin-bottom: 2rem;
